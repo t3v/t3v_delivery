@@ -19,6 +19,13 @@ Installation
 2. Run `composer install` or `composer update` to install all dependencies with Composer
 3. Include the TypoScript for T3v Delivery
 
+Commands
+--------
+
+* Rsync Command
+
+    * Run Action
+
 Development
 -----------
 
