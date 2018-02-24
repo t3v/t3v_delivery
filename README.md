@@ -10,6 +10,7 @@ Dependencies
 
 * TYPO3 CMS 7.6 or greater
 * T3v Core extension
+* Rsync Library (`rsync-lib`)
 
 Installation
 ------------
