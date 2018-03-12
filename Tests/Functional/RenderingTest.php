@@ -6,8 +6,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Nimut\TestingFramework\Http\Response;
 use Nimut\TestingFramework\TestCase\FunctionalTestCase;
 
+use PHPUnit\Util\PHP\DefaultPhpProcess;
+
 /**
- * Rendering Test Class
+ * The rendering test class.
  *
  * @package T3v\T3vDelivery\Tests\Functional
  */
@@ -57,11 +59,11 @@ class RenderingTest extends FunctionalTestCase {
   }
 
   /**
-   * Helper function to fetch the Front-end response.
+   * Helper function to fetch the Frontend response.
    *
    * @param array $requestArguments The request arguments
    * @param boolean $failOnFailure Fail on failure, defaults to `true`
-   * @return \Nimut\TestingFramework\Http\Response The Front-end response
+   * @return \Nimut\TestingFramework\Http\Response The Frontend response
    */
   protected function fetchFrontendResponse(array $requestArguments, $failOnFailure = true) {
     $failOnFailure = (boolean) $failOnFailure;
@@ -90,11 +92,9 @@ class RenderingTest extends FunctionalTestCase {
       'ntfRoot'      => __DIR__ . '/../../.build/vendor/nimut/testing-framework/'
     ]);
 
-    $factory = \PHPUnit_Util_PHP::factory();
-
-    $response = $factory->runJob($template->render());
-
-    $result = json_decode($response['stdout'], true);
+    $php      = DefaultPhpProcess::factory();
+    $response = $php->runJob($template->render());
+    $result   = json_decode($response['stdout'], true);
 
     if ($result === null) {
       $this->fail('Frontend Response is empty:' . LF . 'Error: ' . LF . $response['stderr']);
