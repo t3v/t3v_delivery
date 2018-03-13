@@ -45,8 +45,6 @@ class RenderingTest extends FunctionalTestCase {
 
   /**
    * Setup before running tests.
-   *
-   * @return void
    */
   protected function setUp() {
     parent::setUp();
