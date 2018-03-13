@@ -1,0 +1,2 @@
+# cat=basic/enable; type=string; label=The path to configuration file:Specify a file name related to web site root directory.
+configFile = typo3conf/t3v_delivery.yml
