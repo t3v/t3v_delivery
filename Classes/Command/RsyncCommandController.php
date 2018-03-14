@@ -2,8 +2,9 @@
 namespace T3v\T3vDelivery\Command;
 
 use AFM\Rsync\Rsync;
-
 use PHLAK\Config;
+use TH\Lock\Exception;
+use TH\Lock\FileLock;
 
 use T3v\T3vCore\Command\AbstractCommandController;
 
@@ -57,57 +58,80 @@ class RsyncCommandController extends AbstractCommandController {
       $buckets = $this->configuration->get('buckets');
 
       if (is_array($buckets)) {
-        foreach ($buckets as $bucket) {
-          $this->syncBucket($bucket, $verbose);
+        foreach ($buckets as $name => $configuration) {
+          $this->syncBucket($name, $configuration, $verbose);
         }
       }
 
-      $this->log('Syncing complete.', 'ok', $verbose);
+      $this->log('Syncing completed.', 'ok', $verbose);
     }
   }
 
   /**
    * Syncs a bucket.
    *
-   * @param array $bucket The bucket
+   * @param array $name The bucket name
+   * @param array $configurtion The bucket configuration
    * @param boolean $verbose The optional verbosity, defaults to `false`
    */
-  protected function syncBucket($bucket, $verbose = false) {
-    $sources = $bucket['sources'];
+  protected function syncBucket($name, $configuration, $verbose = false) {
+    $name    = (string) $name;
+    $sources = $configuration['sources'];
     $verbose = (boolean) $verbose;
 
-    foreach ($sources as $source) {
-      $path   = (string) $source['path'];
-      $target = (string) $bucket['target'];
+    $this->log("Syncing `${name}` bucket...", 'info', $verbose);
 
-      if (!empty($path) && !empty($target)) {
-        $origin = PATH_site . $path;
+    try {
+      $fileLock = new FileLock($this->getLockFilePath($name));
 
-        if (is_dir($origin)) {
-          $exclude          = $source['exclude']                      ?: [];
-          $recursive        = (boolean) $source['recursive']          ?: true;
-          $followSymlinks   = (boolean) $source['follow_symlinks']    ?: true;
-          $deleteFromTarget = (boolean) $source['delete_from_target'] ?: false;
-          $dryRun           = (boolean) $source['dry_run']            ?: false;
+      $fileLock->acquire();
 
-          $rsync = new Rsync;
-          $rsync->setExclude($exclude);
-          $rsync->setRecursive($recursive);
-          $rsync->setFollowSymlinks($followSymlinks);
-          $rsync->setDeleteFromTarget($deleteFromTarget);
-          $rsync->setDryRun($dryRun);
-          $rsync->setShowOutput($verbose);
-          $rsync->setVerbose($verbose);
+      foreach ($sources as $source) {
+        $path   = (string) $source['path'];
+        $target = (string) $configuration['target'];
 
-          if (is_array($bucket['ssh'])) {
-            $rsync->setSshOptions($bucket['ssh']);
+        if (!empty($path) && !empty($target)) {
+          $origin = PATH_site . $path;
+
+          if (is_dir($origin)) {
+            $exclude          = $source['exclude']            ?? [];
+            $recursive        = $source['recursive']          ?? true;
+            $followSymlinks   = $source['follow_symlinks']    ?? true;
+            $deleteFromTarget = $source['delete_from_target'] ?? false;
+            $archive          = $source['archive']            ?? false;
+            $dryRun           = $source['dry_run']            ?? false;
+
+            $rsync = new Rsync;
+            $rsync->setExclude($exclude);
+            $rsync->setRecursive($recursive);
+            $rsync->setFollowSymlinks($followSymlinks);
+            $rsync->setDeleteFromTarget($deleteFromTarget);
+            $rsync->setArchive($archive);
+            $rsync->setDryRun($dryRun);
+            $rsync->setVerbose($verbose);
+
+            if (is_array($configuration['ssh'])) {
+              $rsync->setSshOptions($configuration['ssh']);
+            }
+
+            $relativePath = $this->getRelativePath($path);
+
+            if ($relativePath) {
+              $target = $target . $relativePath;
+            }
+
+            $rsync->sync($origin, $target);
+          } else {
+            $this->log("Directory: `${origin}` not found.", 'error', $verbose);
           }
-
-          // $rsync->sync($origin, $target);
-        } else {
-          $this->log("Directory: `${origin}` not found.", 'error', $verbose);
         }
       }
+
+      $fileLock->release();
+
+      $this->log("The bucket called `${name}` has been synced.", 'ok', $verbose);
+    } catch (\TH\Lock\Exception $exception) {
+      $this->log("The bucket called `${name}` is currently being synced.", 'warning', $verbose);
     }
   }
 
@@ -128,5 +152,41 @@ class RsyncCommandController extends AbstractCommandController {
         throw new \Exception("Configuration file: `${configurationFile}` not found.");
       }
     }
+  }
+
+  /**
+   * Gets the lock file path for an identifier, typical the name of a bucket.
+   *
+   * @param string $identifier The identifier
+   * @return string The lock file path
+  */
+  protected function getLockFilePath($identifier) {
+    $identifier   = (string) $identifier;
+    $tempFolder   = PATH_site . 'typo3temp';
+    $lockFilePath = "${tempFolder}/t3v_delivery-${identifier}.lock";
+
+    return $lockFilePath;
+  }
+
+  /**
+   * Gets the relative path.
+   *
+   * @param string $path The path
+   * @return string|null The relative path or null
+  */
+  protected function getRelativePath($path) {
+    $path         = (string) $path;
+    $segments     = explode('/', $path);
+    $relativePath = null;
+
+    if (sizeof($segments) >= 2) {
+      array_pop($segments);
+
+      foreach ($segments as &$segment) {
+        $relativePath = $relativePath . '/' . $segment;
+      }
+    }
+
+    return $relativePath;
   }
 }

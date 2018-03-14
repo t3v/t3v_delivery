@@ -26,7 +26,7 @@ Commands
 
 * Rsync Command
 
-    * Run Action
+    * Sync Action
 
 Development
 -----------
