@@ -11,6 +11,7 @@ Dependencies
 * TYPO3 CMS 7.6
 * T3v Core extension
 * Config Library (`phlak/config`)
+* Lock Library (`texthtml/php-lock`)
 * Rsync Library (`albertofem/rsync-lib`)
 
 Installation
