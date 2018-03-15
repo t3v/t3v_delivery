@@ -10,7 +10,9 @@ Dependencies
 
 * TYPO3 CMS 8.7 or greater
 * T3v Core extension
-* Rsync Library (`rsync-lib`)
+* Config Library (`phlak/config`)
+* Lock Library (`texthtml/php-lock`)
+* Rsync Library (`albertofem/rsync-lib`)
 
 Installation
 ------------
@@ -24,7 +26,7 @@ Commands
 
 * Rsync Command
 
-    * Run Action
+    * Sync Action
 
 Development
 -----------

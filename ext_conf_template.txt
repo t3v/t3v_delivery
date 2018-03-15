@@ -1,0 +1,5 @@
+# cat=basic/enable; type=boolean; label=Enabled
+enabled = 0
+
+# cat=basic/enable; type=string; label=The path to configuration file:Specify a file name related to the web site root directory.
+configurationFile = typo3conf/t3v_delivery.yaml
