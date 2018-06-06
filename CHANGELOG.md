@@ -6,6 +6,9 @@ Notable changes will be documented in this file. The project adheres to [Semanti
 Unreleased
 ----------
 
+* Improved `RsyncCommandController`
+* Refactoring and Type Hinting and improved tests
+* Updated TypoScript structure
 * Updated AppVeyor configuration
 * Cleaned up
 
