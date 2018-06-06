@@ -1,4 +1,4 @@
-# cat=basic/enable; type=boolean; label=En-/disables extension.
+# cat=basic/enable; type=boolean; label=En-/disables extension
 enabled = 0
 
 # cat=basic/enable; type=string; label=The path to configuration file:Specify a file name relative to the web site root directory.

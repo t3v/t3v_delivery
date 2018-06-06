@@ -6,11 +6,11 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * The content post proc output hook class.
  *
- * Searches and replaces in the generated page using regular expressions.
+ * Searches and replaces in the generated output using regular expressions.
  *
  * @package T3v\T3vDelivery\Hooks
  */
- class ContentPostProcOutputHook {
+class ContentPostProcOutputHook {
   /**
    * Searches for a string and replaces it with something else.
    *
