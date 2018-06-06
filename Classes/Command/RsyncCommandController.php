@@ -15,6 +15,13 @@ use T3v\T3vCore\Command\AbstractCommandController;
  */
 class RsyncCommandController extends AbstractCommandController {
   /**
+   * If the extension is enabled.
+   *
+   * @var boolean
+   */
+  protected $enabled = false;
+
+  /**
    * The configuration.
    *
    * @var \PHLAK\Config
@@ -32,8 +39,6 @@ class RsyncCommandController extends AbstractCommandController {
     }
 
     if (is_array($extensionConfiguration)) {
-      $this->extensionConfiguration = $extensionConfiguration;
-
       $enabled = (boolean) $extensionConfiguration['enabled'];
 
       if ($enabled) {
