@@ -17,7 +17,7 @@ class RsyncCommandController extends AbstractCommandController {
   /**
    * If the extension is enabled.
    *
-   * @var boolean
+   * @var bool
    */
   protected $enabled = false;
 
@@ -52,11 +52,9 @@ class RsyncCommandController extends AbstractCommandController {
   /**
    * The sync command.
    *
-   * @param boolean $verbose The optional verbosity, defaults to `false`
+   * @param bool $verbose The optional verbosity, defaults to `false`
    */
-  public function syncCommand($verbose = false) {
-    $verbose = (boolean) $verbose;
-
+  public function syncCommand(bool $verbose = false) {
     if ($this->enabled) {
       $this->log('Syncing...', 'info', $verbose);
 
@@ -75,14 +73,12 @@ class RsyncCommandController extends AbstractCommandController {
   /**
    * Syncs a bucket.
    *
-   * @param array $name The bucket name
+   * @param string $name The bucket name
    * @param array $configurtion The bucket configuration
-   * @param boolean $verbose The optional verbosity, defaults to `false`
+   * @param bool $verbose The optional verbosity, defaults to `false`
    */
-  protected function syncBucket($name, $configuration, $verbose = false) {
-    $name    = (string) $name;
+  protected function syncBucket(string $name, array $configuration, bool $verbose = false) {
     $sources = $configuration['sources'];
-    $verbose = (boolean) $verbose;
 
     $this->log("Syncing `${name}` bucket...", 'info', $verbose);
 
