@@ -30,10 +30,11 @@
   ],
   "require": {
     "php": ">= 7.0 < 7.3",
-    "typo3/cms-core": "^8.7 || ^9.1",
-    "phlak/config": "~3.0.1",
-    "texthtml/php-lock": "~2.2.1",
-    "albertofem/rsync-lib": "~1.0.0"
+    "typo3/cms-core": "^8.7 || ^9.3",
+    "phlak/config": "^5.0",
+    "texthtml/php-lock": "^2.2",
+    "albertofem/rsync-lib": "^1.0",
+    "t3v/t3v_core": "*"
   },
   "require-dev": {
     "mikey179/vfsStream": "^1.6",
