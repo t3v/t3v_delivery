@@ -29,7 +29,7 @@ class RenderingTest extends FunctionalTestCase {
   protected $testExtensionsToLoad = ['typo3conf/ext/t3v_delivery'];
 
   /**
-   * Test if template is rendered.
+   * Tests if the template is rendered.
    *
    * @test
    */
@@ -53,11 +53,11 @@ class RenderingTest extends FunctionalTestCase {
 
     $this->importDataSet(__DIR__ . '/Fixtures/Database/Pages.xml');
 
-    $this->setUpFrontendRootPage(1, ['EXT:t3v_delivery/Tests/Functional/Fixtures/Frontend/Basic.ts']);
+    $this->setUpFrontendRootPage(1, ['EXT:t3v_delivery/Tests/Functional/Fixtures/Frontend/Basic.typoscript']);
   }
 
   /**
-   * Helper function to fetch the Frontend response.
+   * Fetches the Frontend response.
    *
    * @param array $requestArguments The request arguments
    * @param bool $failOnFailure Fail on failure, defaults to `true`
