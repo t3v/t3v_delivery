@@ -99,17 +99,25 @@ class RsyncCommandController extends AbstractCommandController {
             if (is_dir($origin)) {
               $exclude          = $source['exclude']            ?? [];
               $recursive        = $source['recursive']          ?? true;
-              $followSymlinks   = $source['follow_symlinks']    ?? true;
+              $times            = $source['times']              ?? true;
+              $compression      = $source['compression']        ?? true;
+              $followSymlinks   = $source['follow_symlinks']    ?? false;
+              $skipNewerFiles   = $source['skip_newer_files']   ?? false;
               $deleteFromTarget = $source['delete_from_target'] ?? false;
               $archive          = $source['archive']            ?? false;
+              $info             = $source['info']               ?? false;
               $dryRun           = $source['dry_run']            ?? false;
 
               $rsync = new Rsync;
               $rsync->setExclude($exclude);
               $rsync->setRecursive($recursive);
+              $rsync->setTimes($times);
+              $rsync->setCompression($compression);
               $rsync->setFollowSymlinks($followSymlinks);
+              $rsync->setSkipNewerFiles($skipNewerFiles);
               $rsync->setDeleteFromTarget($deleteFromTarget);
               $rsync->setArchive($archive);
+              $rsync->setInfo($info);
               $rsync->setDryRun($dryRun);
               $rsync->setVerbose($verbose);
 
