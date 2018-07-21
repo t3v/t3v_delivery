@@ -27,7 +27,7 @@ install:
   - IF %PHP%==1 echo extension=php_fileinfo.dll >> php.ini
   - appveyor DownloadFile https://getcomposer.org/composer.phar
   - cd c:\projects\t3v_delivery
-  - composer require typo3/cms --prefer-source --no-progress --ansi
+  - composer require typo3/cms-core --prefer-source --ansi --no-progress
 
 test_script:
   - cd c:\projects\t3v_delivery
