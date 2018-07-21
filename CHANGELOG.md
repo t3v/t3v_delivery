@@ -3,10 +3,11 @@ Changelog
 
 Notable changes will be documented in this file. The project adheres to [Semantic Versioning].
 
-Unreleased
-----------
+1.3.1
+-----
 
 * Updated AppVeyor configuration
+* Cleaned up
 
 1.3.0
 -----
