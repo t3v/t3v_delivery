@@ -1,7 +1,14 @@
-Changelog
+CHANGELOG
 =========
 
 Notable changes will be documented in this file. The project adheres to [Semantic Versioning].
+
+Unreleased
+----------
+
+* Updated dependencies
+* Update Travis CI and AppVeyor configuration
+* Cleaned up
 
 1.3.1
 -----
