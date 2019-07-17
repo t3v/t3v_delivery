@@ -3,8 +3,8 @@ CHANGELOG
 
 Notable changes will be documented in this file. The project adheres to [Semantic Versioning].
 
-Unreleased
-----------
+2.4.0
+-----
 
 * Support only TYPO3 8.x
 * Updated Travis CI configuration
