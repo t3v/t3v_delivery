@@ -33,7 +33,7 @@
     "phlak/config": "^5.0",
     "texthtml/php-lock": "^2.2",
     "albertofem/rsync-lib": "^1.0",
-    "t3v/t3v_core": "dev-7-0"
+    "t3v/t3v_core": "dev-7-x"
   },
   "require-dev": {
     "mikey179/vfsstream": "^1.6",
