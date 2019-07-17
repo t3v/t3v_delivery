@@ -8,7 +8,7 @@
 Dependencies
 ------------
 
-* TYPO3 CMS 8.7 or greater
+* TYPO3 CMS 8.7
 * Config Library (`phlak/config`)
 * Lock Library (`texthtml/php-lock`)
 * Rsync Library (`albertofem/rsync-lib`)
